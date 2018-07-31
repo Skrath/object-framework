@@ -1,6 +1,7 @@
 <?php
 
-include 'core/DataStorage.class.php';
+include 'core/classes/DataContainer.class.php';
+include 'core/classes/Datum.class.php';
 
 $data = new DataContainer(
 [
