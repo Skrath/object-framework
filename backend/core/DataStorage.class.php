@@ -51,15 +51,17 @@ class DataContainer {
             return $this->dataContainer[$name];
         }
 
-        if (stripos($name, 'get') === 0) {
-            $variable = substr($name, 3);
-            return $this->{$variable};
+        foreach (['get', 'set', 'save', 'load'] as $action) {
+            if (stripos($name, $action) === 0) {
+                $variable = substr($name, strlen($action));
+
+                if (!is_null($arguments[0])) {   
+                    $this->{$variable} = $arguments[0];
+                }
+            }
         }
 
-        if (stripos($name, 'set') === 0) {
-            $variable = substr($name, 3);
-            return $this->{$variable} = $arguments[0];
-        }
+        return $this->{$variable};
     }
 
     public function __set(string $name, $value) {
