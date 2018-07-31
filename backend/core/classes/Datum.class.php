@@ -23,7 +23,12 @@ class Datum {
             if ($this->validateByType($value)) {
                 $this->type = gettype($value);
                 $this->value = $value;
-            } // Throw stuff here?
+            } else {
+                // attempt casting
+                if (settype($value, $this->type)) {
+                    $this->value = $value;
+                }
+            }
         }
     }
 
