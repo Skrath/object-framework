@@ -4,10 +4,8 @@ class Datum {
     protected $type;
     protected $value;
 
-    public function __construct($value) {
-        $this->storeValue($value);
-
-        return $value;
+    public function __construct($value = null) {
+        return $this($value);
     }
 
     public function __invoke($value = null) {
