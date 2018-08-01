@@ -1,3 +1,9 @@
 FROM php
 
 WORKDIR /app
+
+# Download and enable composer globally
+RUN php -r "copy('https://getcomposer.org/download/1.6.5/composer.phar', 'composer.phar');"
+RUN chmod +x composer.phar
+RUN mv composer.phar /usr/local/bin/composer
+RUN composer self-update
