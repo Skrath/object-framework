@@ -2,7 +2,9 @@ version: '3'
 services:
   backend:
     # image: php
-    build: ./docker/backend
+    build: 
+      context: .
+      dockerfile: ./docker/backend/dockerfile
     volumes:
      - .:/app
     # ports:
