@@ -23,7 +23,7 @@ class DataContainer {
             if (stripos($name, $action) === 0) {
                 $variable = substr($name, strlen($action));
 
-                if (!is_null($arguments[0])) {   
+                if (isset($arguments[0]) && !is_null($arguments[0])) {   
                     $this->{$variable} = $arguments[0];
                 }
             }
