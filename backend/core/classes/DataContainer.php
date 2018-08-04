@@ -1,4 +1,7 @@
 <?php
+namespace core;
+
+use Core\Datum;
 
 class DataContainer {
     protected $dataContainer = [];

@@ -1,4 +1,7 @@
 <?php
+namespace core;
+
+use Core\DataContainer;
 
 class Datum {
     protected $type = null;
