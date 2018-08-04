@@ -2,4 +2,4 @@ language: php
 php:
   - '7.0'
 
-script: vendor/bin/phpunit --bootstrap vendor/autoload.php backend/core/tests/
+script: phpunit --bootstrap vendor/autoload.php backend/core/tests/
