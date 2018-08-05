@@ -19,6 +19,19 @@ class Datum {
         return $this->value;
     }
 
+    public function __toString(): String
+    {
+        if (is_object($this->value)) {
+            return 'Object';
+        }
+
+        if (is_bool($this->value)) {
+            return ($this->value) ? 'True' : 'False';
+        }
+
+        return (String) $this->value;
+    }
+
     protected function storeValue($value) {
         if (is_array($value)) {
             $this->value = new DataContainer($value);
