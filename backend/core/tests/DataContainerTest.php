@@ -23,6 +23,16 @@ final class DataContainerTest extends TestCase {
             ]
         ];
 
+    public function testCanBeCreatedFromNothing(): void
+    {
+        $dataContainer = new DataContainer();
+
+        $this->assertInstanceOf(
+            DataContainer::class,
+            $dataContainer
+        );
+    }
+
     public function testCanBeCreatedFromSimpleArray(): void
     {
         $dataContainer = new DataContainer($this->testDataSimple);

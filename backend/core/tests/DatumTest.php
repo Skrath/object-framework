@@ -9,6 +9,13 @@ use Core\Datum;
 
 final class DatumTest extends TestCase {
 
+    public function testCanBeCreatedFromNothing(): void
+    {
+        $datum = new Datum();
+
+        $this->assertInstanceOf(Datum::class, $datum);
+    }
+
     public function testCanBeCreatedFromString(): void
     {
         $datum = new Datum('test');
