@@ -3,14 +3,12 @@ php:
   - '7.2'
   - '7.1'
 
-before_install:
-- composer require php-coveralls/php-coveralls
-- composer install --dev
-
 before_script: composer dump-autoload -o
 
 script: 
-  - ./bin/phpunit --coverage-clover ./tests/logs/clover.xml --bootstrap vendor/autoload.php backend/core/tests/
- 
-after_script:
-- php vendor/bin/coveralls -v
+  - phpunit
+
+after_success:
+  - travis_retry php bin/php-coveralls
+  # or enable logging
+  - travis_retry php bin/php-coveralls -v
