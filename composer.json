@@ -11,5 +11,9 @@
             "Core\\": "backend/core/classes/",
             "CoreTests\\": "backend/core/tests/"
         }
+    },
+
+    "config": {
+        "bin-dir": "bin/"
     }
 }
