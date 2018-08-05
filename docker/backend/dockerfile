@@ -2,8 +2,13 @@ FROM php
 
 WORKDIR /app
 
+# Install xdebug
+RUN pecl install xdebug \
+  && docker-php-ext-enable xdebug
+
 # Install Git, requirement for some Composer packages
 RUN apt-get update && apt-get install -y \
+  zip \
   git 
   
 # Download and enable composer globally
