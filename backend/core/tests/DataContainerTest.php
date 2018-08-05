@@ -60,11 +60,28 @@ final class DataContainerTest extends TestCase {
         $this->assertEquals('Steve', $dataContainer->getName());
     }
 
+    public function testCanGetObjectByMethodCall(): Void {
+        $dataContainer = new DataContainer($this->testDataSimple);
+
+        $this->assertInstanceOf(
+            Datum::class,
+            $dataContainer->Name()
+        );
+        $this->assertEquals('John', $dataContainer->Name()());
+    }
+
     public function testCanGetValueByDirectAccess(): Void
     {
         $dataContainer = new DataContainer($this->testDataComplex);
 
         $this->assertEquals('Steve', $dataContainer->Name);
+    }
+
+    public function testWillReturnNullOnUnknownValue(): Void
+    {
+        $dataContainer = new DataContainer($this->testDataSimple);
+
+        $this->assertNull($dataContainer->BogusValue);
     }
 
     public function testCanGetValueFromSubObject(): Void
