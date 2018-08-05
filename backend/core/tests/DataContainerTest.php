@@ -142,13 +142,20 @@ final class DataContainerTest extends TestCase {
     public function testCanBeAccessedAsArray(): Void
     {
         $dataContainer = new DataContainer($this->testDataList);
+        $this->assertTrue(isset($dataContainer[1]));
+        $this->assertFalse(isset($dataContainer[99]));
         $this->assertEquals('Banana', $dataContainer[1]);
         $dataContainer[1] = 'Bandana';
         $this->assertEquals('Bandana', $dataContainer[1]);
 
         $dataContainer = new DataContainer($this->testDataSimple);
+        $this->assertTrue(isset($dataContainer['Name']));
+        $this->assertFalse(isset($dataContainer['badindex']));
         $this->assertEquals('John', $dataContainer['Name']);
         $dataContainer['Name'] = 'Steve';
         $this->assertEquals('Steve', $dataContainer['Name']);
+
+        unset($dataContainer['Name']);
+        $this->assertFalse(isset($dataContainer['Name']));
     }
 }
