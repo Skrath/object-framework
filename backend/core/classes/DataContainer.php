@@ -44,6 +44,8 @@ class DataContainer {
         if ($this->datumExists($name)) {
             return $this->dataContainer[$name]();
         }
+
+        return null;
     }
 
     protected function datumExists(string $name): bool {
