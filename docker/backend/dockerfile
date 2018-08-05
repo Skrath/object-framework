@@ -22,4 +22,7 @@ COPY composer.lock ./
 
 # Get all the packages
 RUN composer install
+RUN composer global require phpunit/phpunit
 RUN composer dump-autoload -o
+
+ENV PATH="~/.composer/vendor/bin:${PATH}"
