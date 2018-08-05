@@ -8,6 +8,8 @@ use Core\DataContainer;
 use Core\Datum;
 
 final class DataContainerTest extends TestCase {
+    private $testDataList = ['Apple', 'Banana', 'Turnip'];
+
     private $testDataSimple = [
         'Name' => "John",
     ];
@@ -26,6 +28,16 @@ final class DataContainerTest extends TestCase {
     public function testCanBeCreatedFromNothing(): Void
     {
         $dataContainer = new DataContainer();
+
+        $this->assertInstanceOf(
+            DataContainer::class,
+            $dataContainer
+        );
+    }
+
+    public function testCanBeCreatedFromList(): Void
+    {
+        $dataContainer = new DataContainer($this->testDataList);
 
         $this->assertInstanceOf(
             DataContainer::class,
@@ -108,5 +120,22 @@ final class DataContainerTest extends TestCase {
         $dataContainer->Name = 'Doug';
 
         $this->assertEquals('Doug', $dataContainer->Name);
+    }
+
+    public function testCanBeIteratedUpon(): Void
+    {
+        $dataContainer = new DataContainer($this->testDataList);
+        $resultArray = [];
+        foreach ($dataContainer as $value) {
+            $resultArray[] = $value;
+        }
+        $this->assertEquals($this->testDataList, $resultArray);
+
+        $dataContainer = new DataContainer($this->testDataSimple);
+        $resultArray = [];
+        foreach ($dataContainer as $key => $value) {
+            $resultArray[$key] = $value;
+        }
+        $this->assertEquals($this->testDataSimple, $resultArray);
     }
 }
