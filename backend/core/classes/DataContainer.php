@@ -3,7 +3,7 @@ namespace Core;
 
 use Core\Datum;
 
-class DataContainer {
+class DataContainer implements \Iterator {
     protected $dataContainer = [];
 
     public function __construct(Array $data = null) {
@@ -53,5 +53,26 @@ class DataContainer {
             array_key_exists($name, $this->dataContainer)
             && $this->dataContainer[$name] instanceOf Datum
         );
+    }
+
+    ///// Iterator functions
+    function rewind() {
+        reset($this->dataContainer);
+    }
+
+    function current() {
+        return current($this->dataContainer);
+    }
+
+    function key() {
+        return key($this->dataContainer);
+    }
+
+    function next() {
+        next($this->dataContainer);
+    }
+
+    function valid(): bool {
+        return (bool) current($this->dataContainer);
     }
 }
