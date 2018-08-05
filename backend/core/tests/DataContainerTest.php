@@ -23,7 +23,7 @@ final class DataContainerTest extends TestCase {
             ]
         ];
 
-    public function testCanBeCreatedFromNothing(): void
+    public function testCanBeCreatedFromNothing(): Void
     {
         $dataContainer = new DataContainer();
 
@@ -33,7 +33,7 @@ final class DataContainerTest extends TestCase {
         );
     }
 
-    public function testCanBeCreatedFromSimpleArray(): void
+    public function testCanBeCreatedFromSimpleArray(): Void
     {
         $dataContainer = new DataContainer($this->testDataSimple);
 
@@ -43,7 +43,7 @@ final class DataContainerTest extends TestCase {
         );
     }
 
-    public function testCanBeCreatedFromComplexArray(): void
+    public function testCanBeCreatedFromComplexArray(): Void
     {
         $dataContainer = new DataContainer($this->testDataComplex);
 
