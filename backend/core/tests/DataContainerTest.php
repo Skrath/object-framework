@@ -138,4 +138,17 @@ final class DataContainerTest extends TestCase {
         }
         $this->assertEquals($this->testDataSimple, $resultArray);
     }
+
+    public function testCanBeAccessedAsArray(): Void
+    {
+        $dataContainer = new DataContainer($this->testDataList);
+        $this->assertEquals('Banana', $dataContainer[1]);
+        $dataContainer[1] = 'Bandana';
+        $this->assertEquals('Bandana', $dataContainer[1]);
+
+        $dataContainer = new DataContainer($this->testDataSimple);
+        $this->assertEquals('John', $dataContainer['Name']);
+        $dataContainer['Name'] = 'Steve';
+        $this->assertEquals('Steve', $dataContainer['Name']);
+    }
 }
