@@ -126,4 +126,18 @@ final class DatumTest extends TestCase {
         $this->assertInternalType('boolean', $datum());
         $this->assertEquals(false, $datum());
     }
+
+    public function testCanBeCastedToString(): Void {
+        $datum = new Datum('Steve');
+        $this->assertEquals('Steve', (String) $datum);
+
+        $datum = new Datum(42);
+        $this->assertEquals('42', (String) $datum);
+
+        $datum = new Datum(true);
+        $this->assertEquals('True', (String) $datum);
+
+        $datum = new Datum(['one', 'two']);
+        $this->assertEquals('Object', (String) $datum);
+    }
 }
