@@ -3,7 +3,7 @@ namespace Core;
 
 use Core\Datum;
 
-class DataContainer implements \Iterator {
+class DataContainer implements \Iterator, \ArrayAccess {
     protected $dataContainer = [];
 
     public function __construct(Array $data = null) {
@@ -74,5 +74,22 @@ class DataContainer implements \Iterator {
 
     function valid(): bool {
         return (bool) current($this->dataContainer);
+    }
+
+    ///// ArrayAccess functions
+    public function offsetSet($offset, $value): Void {
+        $this->$offset = $value;
+    }
+
+    public function offsetExists($offset): bool {
+        return $this->datumExists($offset);
+    }
+
+    public function offsetUnset($offset): Void {
+        unset($this->dataContainer[$offset]);
+    }
+
+    public function offsetGet($offset) {
+        return $this->$offset;
     }
 }
