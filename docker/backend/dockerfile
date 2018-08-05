@@ -13,6 +13,7 @@ RUN mv composer.phar /usr/local/bin/composer
 RUN composer self-update
 
 COPY composer.json ./
+COPY composer.lock ./
 
 # Get all the packages
 RUN composer install

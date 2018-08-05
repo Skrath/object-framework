@@ -1,4 +1,7 @@
 {
+    "name": "Object Framework",
+    "description": "A framework",
+
     "require-dev": {
         "phpunit/phpunit": "^7"
     },
