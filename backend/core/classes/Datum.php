@@ -4,7 +4,7 @@ namespace Core;
 use Core\DataContainer;
 
 class Datum {
-    protected $type = null;
+    protected $type = 'unknown';
     protected $value;
 
     public function __construct($value = null) {
@@ -54,6 +54,10 @@ class Datum {
     public function setType(String $type): String {
         $this->type = $type;
 
+        return $this->type;
+    }
+
+    public function getType(): String {
         return $this->type;
     }
 }
