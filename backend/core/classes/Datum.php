@@ -6,8 +6,18 @@ use Core\DataContainer;
 class Datum {
     protected $type = 'unknown';
     protected $value;
+    protected $defaultValue = null;
+    protected $typeMap = [
+        'boolean' => 'bool'
+    ];
+    protected $schema = Array();
 
-    public function __construct($value = null) {
+    public function __construct($value = null, Array $schema = null, Array $typemap = null) {
+        $this->schema = $schema;
+        if (isset($typemap)) {
+            $this->typeMap = array_merge($this->typeMap, $typemap);
+        }
+
         return $this($value);
     }
 
@@ -36,32 +46,26 @@ class Datum {
         if (is_array($value)) {
             $this->value = new DataContainer($value);
         } else {
-            if ($this->validateByType($value)) {
-                $this->type = gettype($value);
-                $this->value = $value;
-            } else {
-                // attempt casting
-                if (settype($value, $this->type)) {
-                    $this->value = $value;
-                }
+            if ($this->type == 'unknown') {
+                $this->type = $this->schema['type'] ?? gettype($value) ?? 'unknown';
             }
+
+            $this->value = $this->autoCast($value);
         }
     }
 
-    protected function validateByType($value) {
+    protected function autoCast($value) {
         $validTypes = ['bool', 'integer', 'string', 'double'];
 
-        $map = [
-            'boolean' => 'bool'
-        ];
+        if (isset($this->type)) {
+            $type = $this->typeMap[$this->type] ?? $this->type;
 
-        $type = $map[$this->type] ?? $this->type;
-
-        if (in_array($type, $validTypes)) {
-            return ('is_'.$type)($value);
+            if (in_array($type, $validTypes)) {
+                settype($value, $type);
+            }
         }
 
-        return true;
+        return $value;
     }
 
     public function setType(String $type): String {
