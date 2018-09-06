@@ -16,7 +16,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
     }
 
     public function __call(string $name , array $arguments) {
-        if ($this->datumSearch($name)) {
+        if ($this->datumSearch($name) !== false) {
             return $this->dataContainer[$name];
         }
 
@@ -37,7 +37,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
         $datumSchema = $this->schemaData['datums'] ?? null;
         $typeMap = $this->schemaData['typemap'] ?? null;
         
-        if ($this->datumSearch($name)) {
+        if ($this->datumSearch($name) !== false) {
             $this->dataContainer[$name]($value, $datumSchema, $typeMap);
         } else {
             $this->dataContainer[$name] = new Datum($value, $datumSchema, $typeMap);
@@ -49,6 +49,8 @@ class DataContainer implements \Iterator, \ArrayAccess {
         }
 
     protected function datumSearch(string $name) {
+        $return = false;
+
         if (array_search($name, $this->dataContainer) !== false) {
             $return = $this->dataContainer[array_search($name, $this->dataContainer)];
         } elseif (array_key_exists($name, $this->dataContainer)) {
