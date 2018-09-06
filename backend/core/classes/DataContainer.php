@@ -16,7 +16,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
     }
 
     public function __call(string $name , array $arguments) {
-        if ($this->datumExists($name)) {
+        if ($this->datumSearch($name)) {
             return $this->dataContainer[$name];
         }
 
@@ -37,7 +37,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
         $datumSchema = $this->schemaData['datums'] ?? null;
         $typeMap = $this->schemaData['typemap'] ?? null;
         
-        if ($this->datumExists($name)) {
+        if ($this->datumSearch($name)) {
             $this->dataContainer[$name]($value, $datumSchema, $typeMap);
         } else {
             $this->dataContainer[$name] = new Datum($value, $datumSchema, $typeMap);
@@ -45,25 +45,17 @@ class DataContainer implements \Iterator, \ArrayAccess {
     }
 
     public function __get(string $name) {
-        if ($this->datumExists($name)) {
-            if (array_search($name, $this->dataContainer) !== false) {
-                return $this->dataContainer[array_search($name, $this->dataContainer)]();
-            } else {
-            return $this->dataContainer[$name]();
-        }
+        return ( ($return = $this->datumSearch($name)) !== false ) ? $return : null;
         }
 
-        return null;
+    protected function datumSearch(string $name) {
+        if (array_search($name, $this->dataContainer) !== false) {
+            $return = $this->dataContainer[array_search($name, $this->dataContainer)];
+        } elseif (array_key_exists($name, $this->dataContainer)) {
+            $return = $this->dataContainer[$name];
     }
 
-    protected function datumExists(string $name): bool {
-        return (
-            (array_key_exists($name, $this->dataContainer)
-            && $this->dataContainer[$name] instanceOf Datum)
-            || 
-            ( (array_search($name, $this->dataContainer) !== false)
-            && $this->dataContainer[array_search($name, $this->dataContainer)] instanceOf Datum)
-        );
+        return ($return instanceOf Datum) ? $return() : false;
     }
 
     ///// Iterator functions
@@ -93,7 +85,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
     }
 
     public function offsetExists($offset): bool {
-        return $this->datumExists($offset);
+        return ($this->datumSearch($offset) !== false);
     }
 
     public function offsetUnset($offset): Void {
