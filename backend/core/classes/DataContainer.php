@@ -46,7 +46,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
 
     public function __get(string $name) {
         if ($this->datumExists($name)) {
-            if (array_search($name, $this->dataContainer)) {
+            if (array_search($name, $this->dataContainer) !== false) {
                 return $this->dataContainer[array_search($name, $this->dataContainer)]();
             } else {
             return $this->dataContainer[$name]();
@@ -61,7 +61,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
             (array_key_exists($name, $this->dataContainer)
             && $this->dataContainer[$name] instanceOf Datum)
             || 
-            (array_search($name, $this->dataContainer)
+            ( (array_search($name, $this->dataContainer) !== false)
             && $this->dataContainer[array_search($name, $this->dataContainer)] instanceOf Datum)
         );
     }
