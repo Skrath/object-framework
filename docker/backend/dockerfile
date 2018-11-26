@@ -25,4 +25,4 @@ RUN composer install
 RUN composer global require phpunit/phpunit
 RUN composer dump-autoload -o
 
-ENV PATH="~/.composer/vendor/bin:${PATH}"
+ENV PATH="/root/.composer/vendor/bin:${PATH}"
