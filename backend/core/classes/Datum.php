@@ -29,6 +29,14 @@ class Datum {
         return $this->value;
     }
 
+    public function __call(string $name , array $arguments) {
+        if (isset($arguments[0]) && !is_null($arguments[0])) {
+            return $this->value->$name($arguments[0]);    
+        } else {
+            return $this->value->$name();
+        }
+    }
+
     public function __toString(): String
     {
         if (is_object($this->value)) {

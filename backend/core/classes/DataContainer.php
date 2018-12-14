@@ -16,21 +16,19 @@ class DataContainer implements \Iterator, \ArrayAccess {
     }
 
     public function __call(string $name , array $arguments) {
-        if ($this->datumSearch($name) !== false) {
-            return $this->dataContainer[$name];
-        }
-
         foreach (['get', 'set', 'save', 'load'] as $action) {
             if (stripos($name, $action) === 0) {
-                $variable = substr($name, strlen($action));
+                $name = substr($name, strlen($action));
+            }
 
                 if (isset($arguments[0]) && !is_null($arguments[0])) {   
-                    $this->{$variable} = $arguments[0];
-                }
+                $this->{$name} = $arguments[0];
             }
+
+            $return = $this->datumSearch($name);
         }
         
-        return $this->{$variable};
+        return ( $return !== false ) ? $return : null;
     }
 
     public function __set(string $name, $value) {
@@ -45,7 +43,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
     }
 
     public function __get(string $name) {
-        return ( ($return = $this->datumSearch($name)) !== false ) ? $return : null;
+        return ( ($return = $this->datumSearch($name)) !== false ) ? $return() : null;
         }
 
     protected function datumSearch(string $name) {
@@ -57,7 +55,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
             $return = $this->dataContainer[$name];
     }
 
-        return ($return instanceOf Datum) ? $return() : false;
+        return ($return instanceOf Datum) ? $return : false;
     }
 
     ///// Iterator functions
