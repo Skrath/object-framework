@@ -6,6 +6,7 @@ use Core\Datum;
 class DataContainer implements \Iterator, \ArrayAccess {
     protected $dataContainer = [];
     protected $schemaData = null;
+    protected $DatumClassName = __NAMESPACE__ . "\Datum";
 
     public function __construct(Array $data = null) {
         if (!is_null($data)) {
@@ -38,7 +39,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
         if ($this->datumSearch($name) !== false) {
             $this->dataContainer[$name]($value, $datumSchema, $typeMap);
         } else {
-            $this->dataContainer[$name] = new Datum($value, $datumSchema, $typeMap);
+            $this->dataContainer[$name] = new $this->DatumClassName($value, $datumSchema, $typeMap);
         }
     }
 
