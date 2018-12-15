@@ -2,6 +2,7 @@
 namespace Core;
 
 use Core\DataContainer;
+use Core\MetaDataContainer;
 
 class Datum {
     protected $type = 'unknown';
@@ -10,9 +11,12 @@ class Datum {
     protected $typeMap = [
         'boolean' => 'bool'
     ];
+    protected $metaContainer;
     protected $schema = Array();
 
     public function __construct($value = null, Array $schema = null, Array $typemap = null) {
+        $this->metaContainer = new MetaDataContainer();
+
         $this->schema = $schema;
         if (isset($typemap)) {
             $this->typeMap = array_merge($this->typeMap, $typemap);
@@ -48,6 +52,10 @@ class Datum {
         }
 
         return (String) $this->value;
+    }
+
+    public function meta() {
+        return $this->metaContainer;
     }
 
     protected function storeValue($value) {
