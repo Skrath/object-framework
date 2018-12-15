@@ -14,6 +14,7 @@ final class DatumTest extends TestCase {
         $datum = new Datum();
 
         $this->assertInstanceOf(Datum::class, $datum);
+        $this->assertNotNull($datum->meta());
     }
 
     public function testCanBeCreatedFromString(): void
@@ -21,6 +22,7 @@ final class DatumTest extends TestCase {
         $datum = new Datum('test');
 
         $this->assertInstanceOf(Datum::class, $datum);
+        $this->assertNotNull($datum->meta());
         $this->assertEquals('test', $datum());
     }
 
@@ -29,6 +31,7 @@ final class DatumTest extends TestCase {
         $datum = new Datum(42);
 
         $this->assertInstanceOf(Datum::class, $datum);
+        $this->assertNotNull($datum->meta());
         $this->assertEquals(42, $datum());
     }
 
@@ -37,6 +40,7 @@ final class DatumTest extends TestCase {
         $datum = new Datum(true);
 
         $this->assertInstanceOf(Datum::class, $datum);
+        $this->assertNotNull($datum->meta());
         $this->assertTrue($datum());
     }
 
@@ -45,6 +49,7 @@ final class DatumTest extends TestCase {
         $datum = new Datum(3.14159);
 
         $this->assertInstanceOf(Datum::class, $datum);
+        $this->assertNotNull($datum->meta());
         $this->assertEquals(3.14159, $datum());
     }
 
@@ -56,6 +61,7 @@ final class DatumTest extends TestCase {
         ]);
 
         $this->assertInstanceOf(Datum::class, $datum);
+        $this->assertNotNull($datum->meta());
         $this->assertInstanceOf(DataContainer::class, $datum());
         $this->assertEquals('value1', $datum()->thing1);
     }
