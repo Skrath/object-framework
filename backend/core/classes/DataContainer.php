@@ -6,6 +6,7 @@ use Core\Datum;
 class DataContainer implements \Iterator, \ArrayAccess {
     protected $dataContainer = [];
     protected $schemaData = null;
+    protected $frozen = false;
     protected $DatumClassName = __NAMESPACE__ . "\Datum";
 
     public function __construct(Array $data = null) {
@@ -38,7 +39,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
         
         if ($this->datumSearch($name) !== false) {
             $this->dataContainer[$name]($value, $datumSchema, $typeMap);
-        } else {
+        } elseif (!$this->frozen) {
             $this->dataContainer[$name] = new $this->DatumClassName($value, $datumSchema, $typeMap);
         }
     }
@@ -57,6 +58,10 @@ class DataContainer implements \Iterator, \ArrayAccess {
     }
 
         return ($return instanceOf Datum) ? $return : false;
+    }
+
+    public function freeze($freeze = true): bool {
+        return $this->frozen = $freeze;
     }
 
     ///// Iterator functions

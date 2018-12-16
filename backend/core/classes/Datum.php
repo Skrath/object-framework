@@ -16,11 +16,24 @@ class Datum {
     protected $schema = Array();
 
     public function __construct($value = null, Array $schema = null, Array $typemap = null) {
+        $this->schema = $schema ?? $this->schema;
+
         if (!$this->flat) {
             $this->metaContainer = new MetaDataContainer();
         }
 
-        $this->schema = $schema;
+        if (is_array($this->schema)) { 
+            if (isset($this->schema['meta']['fields'])) {
+                foreach ($this->schema['meta']['fields'] as $key => $value) {
+                    $this->metaContainer->$key = $value ?? null;
+                }
+            }
+
+            if (isset($this->schema['meta']['freeze'])) {
+                $this->metaContainer->freeze($this->schema['meta']['freeze']);
+            }
+        }
+
         if (isset($typemap)) {
             $this->typeMap = array_merge($this->typeMap, $typemap);
         }
