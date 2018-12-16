@@ -6,6 +6,7 @@ use Core\MetaDataContainer;
 
 class Datum {
     protected $type = 'unknown';
+    protected $flat = false;
     protected $value;
     protected $defaultValue = null;
     protected $typeMap = [
@@ -15,7 +16,9 @@ class Datum {
     protected $schema = Array();
 
     public function __construct($value = null, Array $schema = null, Array $typemap = null) {
-        $this->metaContainer = new MetaDataContainer();
+        if (!$this->flat) {
+            $this->metaContainer = new MetaDataContainer();
+        }
 
         $this->schema = $schema;
         if (isset($typemap)) {
