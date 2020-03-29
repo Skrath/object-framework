@@ -23,7 +23,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
                 $name = substr($name, strlen($action));
             }
 
-                if (isset($arguments[0]) && !is_null($arguments[0])) {   
+            if (isset($arguments[0]) && !is_null($arguments[0])) {
                 $this->{$name} = $arguments[0];
             }
 
@@ -46,7 +46,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
 
     public function __get(string $name) {
         return ( ($return = $this->datumSearch($name)) !== false ) ? $return() : null;
-        }
+    }
 
     protected function datumSearch(string $name) {
         $return = false;
@@ -55,7 +55,7 @@ class DataContainer implements \Iterator, \ArrayAccess {
             $return = $this->dataContainer[array_search($name, $this->dataContainer)];
         } elseif (array_key_exists($name, $this->dataContainer)) {
             $return = $this->dataContainer[$name];
-    }
+        }
 
         return ($return instanceOf Datum) ? $return : false;
     }
